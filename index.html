@@ -1,107 +1,61 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة البيانات</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            margin: 20px;
-            background-color: #f9f9f9;
+<script>
+    // بيانات الأصناف والأسعار
+    const items = [
+        { name: "صنف 1", price: 10 },
+        { name: "صنف 2", price: 20 },
+        { name: "صنف 3", price: 30 }
+    ];
+
+    // ملء خيارات اسم الصنف
+    const itemsList = document.getElementById("items");
+    items.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.name;
+        option.setAttribute("data-price", item.price);
+        itemsList.appendChild(option);
+    });
+
+    // تحديث السعر عند اختيار اسم الصنف
+    document.getElementById("item-name").addEventListener("input", function() {
+        const selectedOption = Array.from(itemsList.children).find(option => option.value === this.value);
+        const priceField = document.getElementById("price");
+        if (selectedOption) {
+            priceField.value = selectedOption.getAttribute("data-price");
+        } else {
+            priceField.value = "";
         }
-        form {
-            max-width: 400px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        input, textarea, button, select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #007BFF;
-            color: #fff;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <h1 style="text-align: center;">إدارة البيانات</h1>
-    <form id="data-form">
-        <label for="item-name">اسم الصنف:</label>
-        <input type="text" id="item-name" list="items" placeholder="اختر أو اكتب اسم الصنف" required>
-        <datalist id="items"></datalist>
+    });
 
-        <label for="price">السعر:</label>
-        <input type="number" id="price" readonly>
+    // إرسال البيانات إلى Google Sheets
+    document.getElementById("data-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        // بيانات النموذج
+        const payload = {
+            itemName: document.getElementById("item-name").value,
+            price: document.getElementById("price").value,
+            quantity: document.getElementById("quantity").value,
+            notes: document.getElementById("notes").value
+        };
 
-        <label for="quantity">الكمية المستلمة:</label>
-        <input type="number" id="quantity" placeholder="أدخل الكمية" required>
-
-        <label for="notes">ملاحظات:</label>
-        <textarea id="notes" rows="4" placeholder="أدخل الملاحظات"></textarea>
-
-        <button type="submit">إضافة البيانات</button>
-    </form>
-
-    <!-- هنا تضع الكود التفاعلي -->
-    <script>
-        // بيانات الأصناف والأسعار
-        const items = [
-            { name: "صنف 1", price: 10 },
-            { name: "صنف 2", price: 20 },
-            { name: "صنف 3", price: 30 }
-        ];
-
-        // ملء خيارات اسم الصنف
-        const itemsList = document.getElementById("items");
-        items.forEach(item => {
-            const option = document.createElement("option");
-            option.value = item.name;
-            option.setAttribute("data-price", item.price);
-            itemsList.appendChild(option);
-        });
-
-        // تحديث السعر عند اختيار اسم الصنف
-        document.getElementById("item-name").addEventListener("input", function() {
-            const selectedOption = Array.from(itemsList.children).find(option => option.value === this.value);
-            const priceField = document.getElementById("price");
-            if (selectedOption) {
-                priceField.value = selectedOption.getAttribute("data-price");
-            } else {
-                priceField.value = "";
-            }
-        });
-
-        // إرسال البيانات عند الضغط على زر الإضافة
-        document.getElementById("data-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const payload = {
-                itemName: document.getElementById("item-name").value,
-                price: document.getElementById("price").value,
-                quantity: document.getElementById("quantity").value,
-                notes: document.getElementById("notes").value
-            };
-            console.log("بيانات الإدخال:", payload); // هنا تربط الكود بـ API أو تخزين البيانات
+        // رابط Google Apps Script (استبدل هذا بالرابط الفعلي لديك)
+        const url = "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec"; 
+        
+        // إرسال البيانات إلى Google Sheets باستخدام Fetch API
+        fetch(url, {
+            method: "POST",
+            contentType: "application/json",
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.text())
+        .then(data => {
             alert("تم إرسال البيانات بنجاح!");
+            console.log(data);
+        })
+        .catch(error => {
+            alert("حدث خطأ أثناء إرسال البيانات");
+            console.error(error);
         });
-    </script>
-</body>
-</html>
+    });
+</script>
+
