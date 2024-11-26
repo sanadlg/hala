@@ -67,21 +67,23 @@
             };
 
             // إرسال البيانات إلى Google Sheets
-            fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert("تم إرسال البيانات بنجاح!");
-                console.log("الرد من Google Apps Script:", data);
-            })
-            .catch(error => {
-                alert("حدث خطأ أثناء الإرسال: " + error.message);
-                console.error("الخطأ:", error);
+           fetch(url, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+})
+.then(response => response.text())
+.then(data => {
+    alert("تم إرسال البيانات بنجاح!"); // عرض رسالة نجاح
+    console.log("الرد من Google Apps Script:", data); // عرض الرد في Console
+})
+.catch(error => {
+    alert("حدث خطأ أثناء الإرسال: " + error.message); // عرض رسالة خطأ
+    console.error("الخطأ:", error); // عرض تفاصيل الخطأ في Console
+});
+
             });
         });
     </script>
