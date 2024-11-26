@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة البيانات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, textarea, button, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">إدارة البيانات</h1>
+    <form id="data-form">
+        <label for="item-name">اسم الصنف:</label>
+        <input type="text" id="item-name" list="items" placeholder="اختر أو اكتب اسم الصنف" required>
+        <datalist id="items"></datalist>
+
+        <label for="price">السعر:</label>
+        <input type="number" id="price" readonly>
+
+        <label for="quantity">الكمية المستلمة:</label>
+        <input type="number" id="quantity" placeholder="أدخل الكمية" required>
+
+        <label for="notes">ملاحظات:</label>
+        <textarea id="notes" rows="4" placeholder="أدخل الملاحظات"></textarea>
+
+        <button type="submit">إضافة البيانات</button>
+    </form>
+</body>
+</html>
