@@ -58,4 +58,20 @@
         });
     });
 </script>
+fetch(url, {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+})
+.then(response => response.text())
+.then(data => {
+    alert("تم إرسال البيانات بنجاح!");
+    console.log("الرد من Google Apps Script:", data); // عرض الرد من Google Apps Script
+})
+.catch(error => {
+    alert("حدث خطأ أثناء الإرسال: " + error.message);
+    console.error("الخطأ:", error); // عرض الخطأ في Console
+});
 
