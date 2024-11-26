@@ -60,5 +60,48 @@
 
         <button type="submit">إضافة البيانات</button>
     </form>
+
+    <!-- هنا تضع الكود التفاعلي -->
+    <script>
+        // بيانات الأصناف والأسعار
+        const items = [
+            { name: "صنف 1", price: 10 },
+            { name: "صنف 2", price: 20 },
+            { name: "صنف 3", price: 30 }
+        ];
+
+        // ملء خيارات اسم الصنف
+        const itemsList = document.getElementById("items");
+        items.forEach(item => {
+            const option = document.createElement("option");
+            option.value = item.name;
+            option.setAttribute("data-price", item.price);
+            itemsList.appendChild(option);
+        });
+
+        // تحديث السعر عند اختيار اسم الصنف
+        document.getElementById("item-name").addEventListener("input", function() {
+            const selectedOption = Array.from(itemsList.children).find(option => option.value === this.value);
+            const priceField = document.getElementById("price");
+            if (selectedOption) {
+                priceField.value = selectedOption.getAttribute("data-price");
+            } else {
+                priceField.value = "";
+            }
+        });
+
+        // إرسال البيانات عند الضغط على زر الإضافة
+        document.getElementById("data-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const payload = {
+                itemName: document.getElementById("item-name").value,
+                price: document.getElementById("price").value,
+                quantity: document.getElementById("quantity").value,
+                notes: document.getElementById("notes").value
+            };
+            console.log("بيانات الإدخال:", payload); // هنا تربط الكود بـ API أو تخزين البيانات
+            alert("تم إرسال البيانات بنجاح!");
+        });
+    </script>
 </body>
 </html>
